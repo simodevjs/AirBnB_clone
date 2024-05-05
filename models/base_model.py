@@ -31,10 +31,10 @@ class BaseModel:
         """
         dictionary = {'__class__': self.__class__.__name__}
         dictionary.update({
+            'updated_at': self.updated_at.isoformat(),
             'id': self.id,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'created_at': self.created_at.isoformat()
         })
-        dictionary.update({k: v for k, v in self.__dict__.items() if k not in dictionary})
+        #dictionary.update({k: v for k, v in self.__dict__.items() if k not in dictionary})
         return dictionary
 
