@@ -21,7 +21,8 @@ class BaseModel:
         ordered_dict['updated_at'] = self.updated_at
         ordered_dict['id'] = self.id
         ordered_dict['created_at'] = self.created_at
-        return f"[{self.__class__.__name__}] ({self.id}) {ordered_dict}"
+        self.__dict__ = ordered_dict
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__ }"
 
     def save(self):
         """Update the updated_at attribute to the current datetime."""
