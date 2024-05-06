@@ -5,13 +5,13 @@ from datetime import datetime
 
 class TestBaseModel(unittest.TestCase):
 
-    def test_id_assignment(self):
+    def test_id(self):
         """Test that each BaseModel has a unique id"""
         model1 = BaseModel()
         model2 = BaseModel()
         self.assertNotEqual(model1.id, model2.id)
 
-    def test_to_dict_contains_correct_keys(self):
+    def test_to_dict(self):
         """Test that the dictionary representation includes correct keys"""
         model = BaseModel()
         model_dict = model.to_dict()

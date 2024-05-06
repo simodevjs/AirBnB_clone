@@ -1,7 +1,5 @@
 import uuid
 import datetime
-
-
 class BaseModel:
     """A base class for all hbnb models."""
 
@@ -15,7 +13,6 @@ class BaseModel:
 
     def __str__(self):
         """Return a string representation of the BaseModel instance."""
-        # Manually construct the dictionary string with repr() for clear debugging output.
         ordered_dict = {k: v for k, v in reversed(self.__dict__.items())
                         if k not in ['id', 'created_at', 'updated_at']}
         ordered_dict['updated_at'] = self.updated_at
@@ -29,14 +26,11 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
 
     def to_dict(self):
-        """
-        Return a dictionary of the instance attributes for serialization,
-        including the class name.
-        """
+        """Return a dictionary of the instance attributes for serialization"""
+        
         result = {k: v for k, v in reversed(self.__dict__.items())
                   if k not in ['id', 'created_at', 'updated_at']}
-        result['__class__'] = self.__class__.__name__  # Add class name
-        # Convert datetime attributes to ISO format strings and add them in order.
+        result['__class__'] = self.__class__.__name__ 
         result['updated_at'] = self.updated_at.isoformat()
         result['id'] = self.id
         result['created_at'] = self.created_at.isoformat()
