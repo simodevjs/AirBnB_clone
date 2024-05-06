@@ -29,12 +29,16 @@ class BaseModel:
         """
         Return a dictionary containing all keys/values of the instance's __dict__,
         """
-        dictionary = {'__class__': self.__class__.__name__}
-        dictionary.update({
+        dictionary = {}
+        dic = self.__dict__.copy()
+        spec = {
             'updated_at': self.updated_at.isoformat(),
             'id': self.id,
             'created_at': self.created_at.isoformat()
-        })
-        #dictionary.update({k: v for k, v in self.__dict__.items() if k not in dictionary})
+        }
+        for k,v in dic.items():
+            if k not in spec:
+                dictionary[k] = v
+        dictionary.update(spec)
         return dictionary
 
