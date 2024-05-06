@@ -27,18 +27,25 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Return a dictionary containing all keys/values of the instance's __dict__,
+        Return a dictionary with the instance's attributes
         """
-        dictionary = {}
-        dic = self.__dict__.copy()
-        spec = {
+        # Specific attributes with their direct values
+        spec_attr = {
+            '__class__': self.__class__.__name__,
             'updated_at': self.updated_at.isoformat(),
             'id': self.id,
             'created_at': self.created_at.isoformat()
         }
-        for k,v in dic.items():
-            if k not in spec:
-                dictionary[k] = v
-        dictionary.update(spec)
-        return dictionary
 
+        # Collect dynamic attributes, exclude any specific ones to avoid duplication
+        dynam = {k: v for k, v in reversed(self.__dict__.items()) if k not in spec_attr}
+
+        # Initialize final dictionary in LIFO, Add specific attributes 
+        final_dict = {}
+        for key, value in dynam.items():
+            final_dict[key] = value
+        for key, value in spec_attr.items():
+            if key not in final_dict:
+                final_dict[key] = value
+
+        return final_dict
