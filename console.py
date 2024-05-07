@@ -2,12 +2,24 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """Simple command processor for HBNB clone."""
     prompt = "(hbnb) "
 
+    def default(self, line):
+        """Handle commands that do not match any known commands."""
+        if '.' in line and line.endswith('.all()'):
+            self.do_all(line.replace('.all()', ''))
+        else:
+            print(f"*** Unknown syntax: {line}")
+            
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
         if not arg:

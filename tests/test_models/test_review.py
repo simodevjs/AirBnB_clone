@@ -1,36 +1,19 @@
-#!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+import unittest
 from models.review import Review
-import os
 
+class TestReview(unittest.TestCase):
+    """Unit tests for Review"""
 
-class test_review(test_basemodel):
-    """ review test class"""
+    def test_review_creation(self):
+        """Test creation of Review instance"""
+        review = Review()
+        self.assertIsInstance(review, Review)
+        self.assertTrue(hasattr(review, 'place_id'))
+        self.assertTrue(hasattr(review, 'user_id'))
+        self.assertTrue(hasattr(review, 'text'))
+        self.assertEqual(review.place_id, '')
+        self.assertEqual(review.user_id, '')
+        self.assertEqual(review.text, '')
 
-    def __init__(self, *args, **kwargs):
-        """ review class init"""
-        super().__init__(*args, **kwargs)
-        self.name = "Review"
-        self.value = Review
-
-    def test_place_id(self):
-        """ testing review place_id attr"""
-        new = self.value()
-        self.assertEqual(type(new.place_id), str if
-                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
-                         type(None))
-
-    def test_user_id(self):
-        """ testing review user_id attr"""
-        new = self.value()
-        self.assertEqual(type(new.user_id), str if
-                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
-                         type(None))
-
-    def test_text(self):
-        """ testing review text attr"""
-        new = self.value()
-        self.assertEqual(type(new.text), str if
-                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
-                         type(None))
+if __name__ == '__main__':
+    unittest.main
