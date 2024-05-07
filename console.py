@@ -15,11 +15,14 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Handle commands that do not match any known commands."""
-        if '.' in line and line.endswith('.all()'):
+        if '.' in line and line.endswith('.count()'):
+            self.do_count(line.replace('.count()', ''))
+        elif '.' in line and line.endswith('.all()'):
             self.do_all(line.replace('.all()', ''))
         else:
             print(f"*** Unknown syntax: {line}")
-            
+
+
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
         if not arg:
@@ -47,6 +50,14 @@ class HBNBCommand(cmd.Cmd):
             print(all_objs[obj_key])
         else:
             print("** no instance found **")
+
+    def do_count(self, arg):
+        """Counts number of instances of a given class."""
+        if arg not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+            print("** class doesn't exist **")
+            return
+        count = sum(1 for obj in storage.all().values() if obj.__class__.__name__ == arg)
+        print(count)
 
     def do_destroy(self, line):
         """Deletes an instance based on class name and id, and saves the change into the JSON file."""
