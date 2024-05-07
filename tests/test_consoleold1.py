@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Unit tests for the HBNBCommand class."""
 import unittest
-from console import HBNBCommand
+from consoleold1 import HBNBCommand
 
 class TestHBNBCommand(unittest.TestCase):
     """Tests for the HBNBCommand command interpreter."""
