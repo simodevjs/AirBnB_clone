@@ -3,21 +3,21 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
     """Simple command processor for the HBNB clone."""
-
-    prompt = "(hbnb) "  
+    prompt = "(hbnb) "
 
     def do_quit(self, arg):
         """Quit command to exit the program."""
-        return True  
+        return True
 
     def do_EOF(self, arg):
-        """Exit the program when receiving EOF (End of File) signal."""
-        print()  
-        return True  
+        """Handle EOF signal to exit the program."""
+        print()  # Ensure a newline is printed before exiting
+        return True
 
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
-        pass
+        return False
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
+s
