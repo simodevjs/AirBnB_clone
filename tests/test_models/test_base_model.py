@@ -10,6 +10,7 @@ class TestBaseModel(unittest.TestCase):
         model1 = BaseModel()
         model2 = BaseModel()
         self.assertNotEqual(model1.id, model2.id)
+        self.assertNotEqual(model1.id, model2.id)
 
     def test_to_dict(self):
         """Test that the dictionary representation includes correct keys"""
