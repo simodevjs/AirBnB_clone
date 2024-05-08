@@ -93,9 +93,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         count = sum(
-            1 for obj in storage.all().values() 
+            1 for obj in storage.all().values()
             if obj.__class__.__name__ == arg
-        )       
+        )
         print(count)
 
     def do_destroy(self, class_name, instance_id):
@@ -127,9 +127,10 @@ class HBNBCommand(cmd.Cmd):
             if not eval(arg):
                 print("** class doesn't exist **")
                 return
-        print(
-            [str(obj) for obj in all_objs.values() if not arg or isinstance(obj, eval(arg))]
-        )
+        print([
+            str(obj) for obj in all_objs.values() 
+            if not arg or isinstance(obj, eval(arg))
+        ])
 
     def do_update(self, class_name, instance_id, update_data):
         """Updates an inst based onclassnme and id with givendata."""
