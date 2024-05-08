@@ -37,17 +37,15 @@ class HBNBCommand(cmd.Cmd):
             if len(args) == 2:
                 instance_id = args[0].strip(' "\'')
                 try:
-                    dict_update = eval(args[1].strip())  # Use eval to parse the dictionary
+                    dict_update = eval(args[1].strip())
                     if isinstance(dict_update, dict):
                         self.do_update(class_name, instance_id, dict_update)
                     else:
                         print("** expected a dictionary **")
-                except:
+                except Exception:
                     print("** invalid dictionary **")
             else:
                 print("** invalid arguments **")
-        else:
-            print(f"*** Unknown syntax: {line}")
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
@@ -90,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
         all_objs = storage.all()
         if key in all_objs:
             del all_objs[key]
-            storage.save()  # Make sure to save changes to the storage
+            storage.save()
             print("Instance destroyed.")
         else:
             print("** no instance found **")
