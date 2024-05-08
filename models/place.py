@@ -10,9 +10,9 @@ class Place(BaseModel):
     name = ""
     description = ""
     number_rooms = 0
-    number_bathrooms = 0  # Added for completeness, assuming you might need it based on similar attributes.
+    number_bathrooms = 0  # Added for completeness, imilar attributes.
     max_guest = 0
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amenity_ids = []  # Corrected the spelling from 'ameninty_ids' to 'amenity_ids'
+    amenity_ids = []  # Correcteds' to 'amenity_ids'
