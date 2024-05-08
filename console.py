@@ -13,8 +13,7 @@ class HBNBCommand(cmd.Cmd):
     """Simple command processor for HBNB clone."""
     prompt = "(hbnb) "
 
-    def default(self, line):
-        """Handle commands that do not match any known commands."""
+    """def default(self, line):
         parts = line.split('.')
         if len(parts) != 2:
             print(f"*** Unknown syntax: {line}")
@@ -39,8 +38,42 @@ class HBNBCommand(cmd.Cmd):
             instance_id, attribute_name, attribute_value = (arg.strip(' "\'') for arg in args)
             self.do_update(class_name, instance_id, attribute_name, attribute_value)
         else:
+            print(f"*** Unknown syntax: {line}")"""
+    
+    def default(self, line):
+        """Handle commands that do not match any known commands."""
+        parts = line.split('.')
+        if len(parts) != 2:
             print(f"*** Unknown syntax: {line}")
-
+            return
+        
+        class_name, command = parts
+        if command.startswith("all()"):
+            self.do_all(class_name)
+        elif command.startswith("count()"):
+            self.do_count(class_name)
+        elif command.startswith("show(") and command.endswith(")"):
+            instance_id = command[5:-1].strip('"\'')
+            self.do_show(class_name, instance_id)
+        elif command.startswith("destroy(") and command.endswith(")"):
+            instance_id = command[8:-1].strip('"\'')
+            self.do_destroy(class_name, instance_id)
+        elif command.startswith("update(") and command.endswith(")"):
+            args = command[7:-1].split(',', 1)
+            if len(args) == 2:
+                instance_id = args[0].strip(' "\'')
+                try:
+                    dict_update = eval(args[1].strip())  # Use eval to parse the dictionary
+                    if isinstance(dict_update, dict):
+                        self.do_update(class_name, instance_id, dict_update)
+                    else:
+                        print("** expected a dictionary **")
+                except:
+                    print("** invalid dictionary **")
+            else:
+                print("** invalid arguments **")
+        else:
+            print(f"*** Unknown syntax: {line}")
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
@@ -128,8 +161,27 @@ class HBNBCommand(cmd.Cmd):
                 return
         print([str(obj) for obj in all_objs.values() if not arg or isinstance(obj, eval(arg))])
 
-    def do_update(self, class_name, instance_id, attribute_name, attribute_value):
-        """Updates an instance based on the class name and id."""
+    def do_update(self, class_name, instance_id, update_data):
+        """Updates an instance based on the class name and id with given data."""
+        if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+            print("** class doesn't exist **")
+            return
+        key = f"{class_name}.{instance_id}"
+        all_objs = storage.all()
+        if key not in all_objs:
+            print("** no instance found **")
+            return
+        obj = all_objs[key]
+        if isinstance(update_data, dict):
+            for attr, value in update_data.items():
+                if hasattr(obj, attr):
+                    setattr(obj, attr, value)
+            obj.save()
+            print("Instance updated with dictionary data.")
+        else:
+            print("** attribute not found or invalid format **")
+
+    """def do_update(self, class_name, instance_id, attribute_name, attribute_value):
         if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
             print("** class doesn't exist **")
             return
@@ -144,8 +196,7 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
             print("Instance updated.")
         else:
-            print("** attribute not found **")
-
+            print("** attribute not found **")"""
     """def do_update(self, line):
         args = line.split()
         if len(args) < 2:
