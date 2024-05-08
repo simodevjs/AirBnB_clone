@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** invalid arguments **")
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it to the JSON prints  id."""
+        """Creates a new inst of BaseModel, saveit to the JSON prints  id."""
         if not arg:
             print("** class name missing **")
             return
@@ -82,17 +82,20 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, arg):
         """Counts the number of instances of a given class."""
         if arg not in [
-            'BaseModel', 
-            'User', 
-            'Place', 
-            'State', 
-            'City', 
-            'Amenity', 
+            'BaseModel',
+            'User',
+            'Place',
+            'State',
+            'City',
+            'Amenity',
             'Review'
         ]:
             print("** class doesn't exist **")
             return
-        count = sum(1 for obj in storage.all().values() if obj.__class__.__name__ == arg)
+        count = sum(
+            1 for obj in storage.all().values() 
+            if obj.__class__.__name__ == arg
+        )       
         print(count)
 
     def do_destroy(self, class_name, instance_id):
@@ -118,16 +121,18 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representations of al ins based or not on classname."""
+        """Prints all string repr of al ins based or not on clasnme."""
         all_objs = storage.all()
         if arg:
             if not eval(arg):
                 print("** class doesn't exist **")
                 return
-        print([str(obj) for obj in all_objs.values() if not arg or isinstance(obj, eval(arg))])
+        print(
+            [str(obj) for obj in all_objs.values() if not arg or isinstance(obj, eval(arg))]
+        )
 
     def do_update(self, class_name, instance_id, update_data):
-        """Updates an instance based on the class name and id with given data."""
+        """Updates an inst based onclassnme and id with givendata."""
         if class_name not in [
             'BaseModel',
             'User',
