@@ -15,10 +15,19 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Handle commands that do not match any known commands."""
-        if '.' in line and line.endswith('.count()'):
-            self.do_count(line.replace('.count()', ''))
-        elif '.' in line and line.endswith('.all()'):
-            self.do_all(line.replace('.all()', ''))
+        parts = line.split('.')
+        if len(parts) != 2:
+            print(f"*** Unknown syntax: {line}")
+            return
+        
+        class_name, command = parts
+        if command.startswith("all()"):
+            self.do_all(class_name)
+        elif command.startswith("count()"):
+            self.do_count(class_name)
+        elif command.startswith("show(") and command.endswith(")"):
+            instance_id = command[5:-1].strip('"\'')
+            self.do_show(class_name, instance_id)
         else:
             print(f"*** Unknown syntax: {line}")
 
@@ -35,8 +44,19 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
-    def do_show(self, line):
-        """Shows the string representation of an instance based on class name and id."""
+    def do_show(self, class_name, instance_id):
+        """Shows an instance based on the class name and id."""
+        if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+            print("** class doesn't exist **")
+            return
+        key = f"{class_name}.{instance_id}"
+        all_objs = storage.all()
+        if key in all_objs:
+            print(all_objs[key])
+        else:
+            print("** no instance found **")
+    
+    """def do_show(self, line):
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -49,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         if obj_key in all_objs:
             print(all_objs[obj_key])
         else:
-            print("** no instance found **")
+            print("** no instance found **")"""
 
     def do_count(self, arg):
         """Counts number of instances of a given class."""
