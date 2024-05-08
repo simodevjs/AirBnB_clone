@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** invalid arguments **")
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it to the JSON file, and prints the id."""
+        """Creates a new instance of BaseModel, saves it to the JSON prints  id."""
         if not arg:
             print("** class name missing **")
             return
@@ -61,7 +61,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, class_name, instance_id):
         """Shows an instance based on the class name and id."""
-        if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+        if class_name not in [
+            'BaseModel',
+            'User',
+            'Place',
+            'State',
+            'City',
+            'Amenity',
+            'Review'
+        ]:
             print("** class doesn't exist **")
             return
         key = f"{class_name}.{instance_id}"
@@ -73,7 +81,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, arg):
         """Counts the number of instances of a given class."""
-        if arg not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+        if arg not in [
+            'BaseModel', 
+            'User', 
+            'Place', 
+            'State', 
+            'City', 
+            'Amenity', 
+            'Review'
+        ]:
             print("** class doesn't exist **")
             return
         count = sum(1 for obj in storage.all().values() if obj.__class__.__name__ == arg)
@@ -81,7 +97,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, class_name, instance_id):
         """Destroys an instance based on the class name and id."""
-        if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+        if class_name not in [
+            'BaseModel',
+            'User',
+            'Place',
+            'State',
+            'City',
+            'Amenity',
+            'Review'
+        ]:
             print("** class doesn't exist **")
             return
         key = f"{class_name}.{instance_id}"
@@ -94,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representations of all instances based or not on the class name."""
+        """Prints all string representations of al ins based or not on classname."""
         all_objs = storage.all()
         if arg:
             if not eval(arg):
@@ -104,7 +128,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, class_name, instance_id, update_data):
         """Updates an instance based on the class name and id with given data."""
-        if class_name not in ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']:
+        if class_name not in [
+            'BaseModel',
+            'User',
+            'Place',
+            'State',
+            'City',
+            'Amenity',
+            'Review'
+        ]:
             print("** class doesn't exist **")
             return
         key = f"{class_name}.{instance_id}"
