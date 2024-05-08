@@ -128,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
         print([
-            str(obj) for obj in all_objs.values() 
+            str(obj) for obj in all_objs.values()
             if not arg or isinstance(obj, eval(arg))
         ])
 
